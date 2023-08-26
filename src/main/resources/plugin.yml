@@ -1,0 +1,6 @@
+name: SimpleTeleport
+version: ${project.version}
+main: me.shiqui.simpleteleport.SimpleTeleport
+api-version: '1.20'
+prefix: SimpleTP
+authors: [ shiqui ]
