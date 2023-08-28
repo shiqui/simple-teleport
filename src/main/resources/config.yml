@@ -1,0 +1,42 @@
+prefix: '&2[SimpleTP]'
+
+home:
+  cd: 30 # number of seconds before a player can use /home again
+  msg:
+    tp: '&5Opening a portal to home...'
+    cd: '&cYour home portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
+    no-home: '&cYou do not have a home yet, use &f/sethome &cto set one'
+  bossbar: '&5Destination: home'
+
+sethome:
+  msg: '&5Setting your home portal to &fx: <x>, y: <y>, z: <z>'
+
+warp:
+  cd: 30 # number of seconds before a player can use /warp again
+  msg:
+    tp: 'Opening a portal to <destination>...'
+    cd: 'Your warp portal is on cooldown, <cooldown>s left before you can use it again'
+
+
+player:
+  cd:
+    sender: 60 # number of seconds before a player can use /tpr again
+  msg:
+    request:
+      sender: 'Sending a portal request to <destination>'
+      receiver: 'Receiving a portal request from <origin>, use /tpa to accept or /tpd to deny'
+
+    accept:
+      sender:
+      receiver:
+
+    deny:
+      sender:
+      receiver:
+
+    tp:
+      sender: 'Opening a portal to <destination>...'
+      receiver: 'Opening a portal from <origin>...'
+
+    cd:
+      sender: 'Your player portal is on cooldown, <cooldown>s left before you can use it again'

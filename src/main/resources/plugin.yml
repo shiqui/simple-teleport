@@ -4,3 +4,10 @@ main: me.shiqui.simpleteleport.SimpleTeleport
 api-version: '1.20'
 prefix: SimpleTP
 authors: [ shiqui ]
+commands:
+  sethome:
+    description: Set home to the player's current location
+    usage: /<command>
+  home:
+    description: Teleport to home
+    usage: /<command>
