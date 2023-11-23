@@ -11,3 +11,11 @@ commands:
   home:
     description: Teleport to home
     usage: /<command>
+
+  tpr:
+    description: Teleport to a player
+    usage: /<command> <player>
+
+  tpa:
+    description: Accept an incoming player teleport request
+    usage: /<command>

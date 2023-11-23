@@ -30,9 +30,9 @@ public class SetHomeCommand implements CommandExecutor {
             String z = String.valueOf(Math.round(location.getZ()));
 
             String msg = MessageHelper.stringFromConfig("sethome.msg")
-                    .replace("<x>", x)
-                    .replace("<y>", y)
-                    .replace("<z>", z);
+                .replace("<x>", x)
+                .replace("<y>", y)
+                .replace("<z>", z);
 
             player.sendMessage(msg);
 

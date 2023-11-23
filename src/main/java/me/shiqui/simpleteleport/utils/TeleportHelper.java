@@ -3,30 +3,20 @@ package me.shiqui.simpleteleport.utils;
 import me.shiqui.simpleteleport.SimpleTeleport;
 import me.shiqui.simpleteleport.tasks.TeleportTask;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.sql.SQLException;
+import java.util.Objects;
 
 
 public class TeleportHelper{
-
-    private static int getHomeCoolDown(Player player){
-        long current = System.currentTimeMillis();
-        long previous = DatabaseHelper.queryLastHomeTeleport(player.getUniqueId());
-        if (previous == 0) {
-            return 0;
-        } else {
-            long elapsed = current - previous;
-            return (SimpleTeleport.plugin.getConfig().getInt("home.cd") - (int) (elapsed / 1000));
-        }
-    }
 
     public static void teleportHome(Player player) {
         try {
             Location home = DatabaseHelper.queryHome(player.getUniqueId());
 
-            int CD = getHomeCoolDown(player);
-            if (CD <= 0){
+            int CD = DatabaseHelper.getHomeCoolDown(player);
+            if (CD <= 0) {
                 // Teleport player to home, set CD
                 String msg = MessageHelper.stringFromConfig("home.msg.tp");
                 String bossBarMsg = MessageHelper.stringFromConfig("home.bossbar");
@@ -54,7 +44,23 @@ public class TeleportHelper{
     }
 
     public static void teleportPlayer(Player player, Player target) {
+        int CD = DatabaseHelper.getPlayerCoolDown(player);
+        if (CD <= 0) {
+            // Teleport player to home, set CD
+            String bossBarMsg = MessageHelper
+                .stringFromConfig("player.bossbar")
+                .replace("<player>", target.getName());
 
+            DatabaseHelper.insertLastPlayerTeleport(player.getUniqueId(), System.currentTimeMillis());
+            DatabaseHelper.removeTeleportRequest(player.getUniqueId());
+
+            new TeleportTask(player, target.getLocation(), bossBarMsg).runTaskTimer(SimpleTeleport.plugin, 0, 1);
+        } else {
+            // Do nothing, /tpr still in CD
+            String msg = MessageHelper.stringFromConfig("player.msg.cd");
+            msg = msg.replace("<cooldown>", String.valueOf(CD));
+            player.sendMessage(msg);
+        }
     }
 
 

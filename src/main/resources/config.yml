@@ -1,5 +1,6 @@
 prefix: '&2[SimpleTP]'
 
+
 home:
   cd: 30 # number of seconds before a player can use /home again
   msg:
@@ -8,8 +9,10 @@ home:
     no-home: '&cYou do not have a home yet, use &f/sethome &cto set one'
   bossbar: '&5Destination: home'
 
+
 sethome:
   msg: '&5Setting your home portal to &fx: <x>, y: <y>, z: <z>'
+
 
 warp:
   cd: 30 # number of seconds before a player can use /warp again
@@ -21,22 +24,37 @@ warp:
 player:
   cd:
     sender: 60 # number of seconds before a player can use /tpr again
+
+  bossbar: '&5Destination: <player>'
+
   msg:
     request:
-      sender: 'Sending a portal request to <destination>'
-      receiver: 'Receiving a portal request from <origin>, use /tpa to accept or /tpd to deny'
+      sender: '&5Sending a portal request to <player>'
+      receiver: '&5Receiving a portal request from <player>, use &2/tpa to accept &5or &c/tpd to deny'
 
     accept:
-      sender:
-      receiver:
+      sender: '&5Opening a portal to <player>...'
+      receiver: '&5Opening a portal from <player>...'
+      no-pending: '&cYou do not have any incoming request'
 
     deny:
       sender:
       receiver:
+      no-pending: '&cYou do not have any incoming request'
 
     tp:
-      sender: 'Opening a portal to <destination>...'
-      receiver: 'Opening a portal from <origin>...'
+      sender: '&5Opening a portal to <player>...'
+      receiver: '&5Opening a portal from <player>...'
 
-    cd:
-      sender: 'Your player portal is on cooldown, <cooldown>s left before you can use it again'
+    # error messages
+    cd: '&cYour player portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
+
+    invalid-input: '&cInvalid input, use &f/tpr <player> &cto request a portal to a player'
+
+    no-target: '&cThis player is offline or does not exist'
+
+    self-tp: '&cYou cannot send a portal to yourself'
+
+    pending-outgoing: '&cYou already have an outgoing request'
+
+    busy: '&c<player> is busy, try again later'

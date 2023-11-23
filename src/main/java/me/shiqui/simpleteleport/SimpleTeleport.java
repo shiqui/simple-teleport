@@ -1,12 +1,11 @@
 package me.shiqui.simpleteleport;
 
 import me.shiqui.simpleteleport.commands.HomeCommand;
+import me.shiqui.simpleteleport.commands.PlayerTeleportAcceptCommand;
+import me.shiqui.simpleteleport.commands.PlayerTeleportRequestCommand;
 import me.shiqui.simpleteleport.commands.SetHomeCommand;
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.sql.SQLException;
-import java.util.UUID;
 
 
 public final class SimpleTeleport extends JavaPlugin {
@@ -22,6 +21,9 @@ public final class SimpleTeleport extends JavaPlugin {
         // Register commands
         getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("home").setExecutor(new HomeCommand());
+        getCommand("tpr").setExecutor(new PlayerTeleportRequestCommand());
+        getCommand("tpa").setExecutor(new PlayerTeleportAcceptCommand());
+
 
         // test
 
