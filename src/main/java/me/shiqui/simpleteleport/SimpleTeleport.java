@@ -1,6 +1,7 @@
 package me.shiqui.simpleteleport;
 
 import me.shiqui.simpleteleport.commands.*;
+import me.shiqui.simpleteleport.tasks.ClearExpiredRequestTask;
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +23,8 @@ public final class SimpleTeleport extends JavaPlugin {
         getCommand("tpa").setExecutor(new PlayerTeleportAcceptCommand());
         getCommand("tpd").setExecutor(new PlayerTeleportDenyCommand());
 
+        // Run tasks
+        new ClearExpiredRequestTask().runTaskTimer(this, 0L, 20L);
     }
 
     @Override

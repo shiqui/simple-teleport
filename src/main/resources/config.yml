@@ -25,6 +25,8 @@ player:
   cd:
     sender: 60 # number of seconds before a player can use /tpr again
 
+  expire-time: 10 # number of seconds before pending teleport request is expired
+
   bossbar: '&5Destination: &l<player>&r'
 
   msg:
@@ -45,6 +47,10 @@ player:
     tp:
       sender: '&5Opening a portal to &l<player>&r&5...'
       receiver: '&5Opening a portal from &l<player>&r&5...'
+
+    expire:
+      sender: '&cAn outgoing portal request has expired'
+      receiver: '&cAn incoming portal request has expired'
 
     # error messages
     cd: '&cYour player portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
