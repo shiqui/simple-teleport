@@ -30,7 +30,7 @@ player:
   msg:
     request:
       sender: '&5Sending a portal request to <player>'
-      receiver: '&5Receiving a portal request from <player>, use &2/tpa to accept &5or &c/tpd to deny'
+      receiver: '&5Receiving a portal request from <player>, use &f/tpa &5to &2accept &5or &f/tpd &5to &cdeny'
 
     accept:
       sender: '&5Opening a portal to <player>...'
@@ -38,8 +38,8 @@ player:
       no-pending: '&cYou do not have any incoming request'
 
     deny:
-      sender:
-      receiver:
+      sender: '&c<player> denied your portal request'
+      receiver: '&cDenied a portal request from <player>'
       no-pending: '&cYou do not have any incoming request'
 
     tp:

@@ -19,3 +19,7 @@ commands:
   tpa:
     description: Accept an incoming player teleport request
     usage: /<command>
+
+  tpd:
+    description: Deny an incoming player teleport request
+    usage: /<command>

@@ -1,9 +1,6 @@
 package me.shiqui.simpleteleport;
 
-import me.shiqui.simpleteleport.commands.HomeCommand;
-import me.shiqui.simpleteleport.commands.PlayerTeleportAcceptCommand;
-import me.shiqui.simpleteleport.commands.PlayerTeleportRequestCommand;
-import me.shiqui.simpleteleport.commands.SetHomeCommand;
+import me.shiqui.simpleteleport.commands.*;
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,9 +20,7 @@ public final class SimpleTeleport extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("tpr").setExecutor(new PlayerTeleportRequestCommand());
         getCommand("tpa").setExecutor(new PlayerTeleportAcceptCommand());
-
-
-        // test
+        getCommand("tpd").setExecutor(new PlayerTeleportDenyCommand());
 
     }
 
