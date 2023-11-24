@@ -25,31 +25,31 @@ player:
   cd:
     sender: 60 # number of seconds before a player can use /tpr again
 
-  bossbar: '&5Destination: <player>'
+  bossbar: '&5Destination: &l<player>&r'
 
   msg:
     request:
-      sender: '&5Sending a portal request to <player>'
-      receiver: '&5Receiving a portal request from <player>, use &f/tpa &5to &2accept &5or &f/tpd &5to &cdeny'
+      sender: '&5Sending a portal request to &l<player>&r'
+      receiver: '&5Incoming portal request from &l<player>&r&5, use &f/tpa &5to &2accept &5or &f/tpd &5to &cdeny'
 
     accept:
-      sender: '&5Opening a portal to <player>...'
-      receiver: '&5Opening a portal from <player>...'
+      sender: '&5Opening a portal to &l<player>&r&5...'
+      receiver: '&5Opening a portal from &l<player>&r&5...'
       no-pending: '&cYou do not have any incoming request'
 
     deny:
-      sender: '&c<player> denied your portal request'
-      receiver: '&cDenied a portal request from <player>'
+      sender: '&c&l<player>&r&c denied your portal request'
+      receiver: '&cDenied a portal request from &l<player>&r'
       no-pending: '&cYou do not have any incoming request'
 
     tp:
-      sender: '&5Opening a portal to <player>...'
-      receiver: '&5Opening a portal from <player>...'
+      sender: '&5Opening a portal to &l<player>&r&5...'
+      receiver: '&5Opening a portal from &l<player>&r&5...'
 
     # error messages
     cd: '&cYour player portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
 
-    invalid-input: '&cInvalid input, use &f/tpr <player> &cto request a portal to a player'
+    invalid-input: '&cInvalid input, use &f/tpr &l<player>&r&c to request a portal to a player'
 
     no-target: '&cThis player is offline or does not exist'
 
@@ -57,4 +57,4 @@ player:
 
     pending-outgoing: '&cYou already have an outgoing request'
 
-    busy: '&c<player> is busy, try again later'
+    busy: '&c&l<player>&r&c is busy, try again later'
