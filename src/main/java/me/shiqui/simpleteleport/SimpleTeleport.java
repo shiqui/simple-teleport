@@ -1,12 +1,10 @@
 package me.shiqui.simpleteleport;
 
-import me.shiqui.simpleteleport.commands.HomeCommand;
-import me.shiqui.simpleteleport.commands.SetHomeCommand;
+import me.shiqui.simpleteleport.commands.*;
+import me.shiqui.simpleteleport.listeners.LogOutListener;
+import me.shiqui.simpleteleport.tasks.ClearExpiredRequestTask;
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.sql.SQLException;
-import java.util.UUID;
 
 
 public final class SimpleTeleport extends JavaPlugin {
@@ -22,9 +20,15 @@ public final class SimpleTeleport extends JavaPlugin {
         // Register commands
         getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("home").setExecutor(new HomeCommand());
+        getCommand("tpr").setExecutor(new PlayerTeleportRequestCommand());
+        getCommand("tpa").setExecutor(new PlayerTeleportAcceptCommand());
+        getCommand("tpd").setExecutor(new PlayerTeleportDenyCommand());
 
-        // test
+        // Register events
+        getServer().getPluginManager().registerEvents(new LogOutListener(), this);
 
+        // Run tasks
+        new ClearExpiredRequestTask().runTaskTimer(this, 0L, 20L);
     }
 
     @Override
