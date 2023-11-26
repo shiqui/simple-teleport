@@ -16,7 +16,7 @@ public class SetHomeCommand implements CommandExecutor {
         if (!(sender instanceof Player)) { return true; }
 
         Player player = (Player)sender;
-        if (args.length != 1) {
+        if (args.length != 0) {
             player.sendMessage(MessageHelper.stringFromConfig("sethome.error.invalid-syntax"));
             return true;
         }
@@ -42,7 +42,5 @@ public class SetHomeCommand implements CommandExecutor {
         );
 
         return true;
-
     }
-
 }

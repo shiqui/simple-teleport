@@ -16,7 +16,7 @@ public class HomeCommand implements CommandExecutor {
         if (!(sender instanceof Player)) { return true; }
 
         Player player = (Player)sender;
-        if (args.length != 1) {
+        if (args.length != 0) {
             player.sendMessage(MessageHelper.stringFromConfig("home.error.invalid-syntax"));
             return true;
         }
