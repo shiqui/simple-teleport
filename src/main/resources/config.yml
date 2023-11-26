@@ -12,6 +12,8 @@ home:
 
 sethome:
   msg: '&5Setting your home portal to &fx: <x>, y: <y>, z: <z>'
+  error:
+    invalid-syntax: '&cInvalid syntax, use &f/sethome &cto set a home'
 
 warp:
   cd: 30 # number of seconds before a player can use /warp again
