@@ -13,12 +13,19 @@ home:
 sethome:
   msg: '&5Setting your home portal to &fx: <x>, y: <y>, z: <z>'
 
-
 warp:
   cd: 30 # number of seconds before a player can use /warp again
-  msg:
-    tp: 'Opening a portal to <destination>...'
-    cd: 'Your warp portal is on cooldown, <cooldown>s left before you can use it again'
+  bossbar: '&5Destination: &l<warp>&r'
+  msg: '&5Opening a portal to &l<warp>&r&5...'
+  error:
+    cd: '&cYour warp portal is on cooldown, &f<cooldown>s&c left before you can use it again'
+    no-warp: '&cThis warp does not exist'
+
+setwarp:
+  msg: '&5Setting &l<warp>&r&5 portal to &fx: <x>, y: <y>, z: <z>'
+
+  error:
+    invalid-syntax: '&cInvalid syntax, use &f/setwarp &cto set a warp'
 
 
 player:

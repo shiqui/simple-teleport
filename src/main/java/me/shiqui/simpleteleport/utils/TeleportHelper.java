@@ -39,7 +39,15 @@ public class TeleportHelper{
     }
 
 
-    public static void teleportWarp(Player player, String warp) {
+    public static void teleportWarp(Player player, Location warp) {
+
+        DatabaseHelper.insertLastWarpTeleport(player.getUniqueId(), System.currentTimeMillis());
+
+        new TeleportTask(
+            player,
+            warp,
+            MessageHelper.stringFromConfig("warp.bossbar")
+        ).runTaskTimer(SimpleTeleport.plugin, 0, 1);
 
     }
 
