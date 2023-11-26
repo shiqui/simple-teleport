@@ -245,7 +245,7 @@ public class DatabaseHelper {
 
     }
 
-    public static Location queryHome(UUID uuid) throws DatabaseHelper.EmptyQueryException{
+    public static Location queryHome(UUID uuid){
         String sql = "SELECT world, x, y, z, yaw, pitch FROM Homes WHERE uuid = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -266,7 +266,7 @@ public class DatabaseHelper {
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
         }
-        throw new DatabaseHelper.EmptyQueryException("No home was found with this UUID.");
+        return null;
     }
 
     public static Location queryWarp(String name) {
@@ -463,12 +463,6 @@ public class DatabaseHelper {
             statementDelete.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
-        }
-    }
-
-    public static class EmptyQueryException extends Exception {
-        public EmptyQueryException(String message) {
-            super(message);
         }
     }
 
