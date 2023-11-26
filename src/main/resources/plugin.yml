@@ -23,3 +23,10 @@ commands:
   tpd:
     description: Deny an incoming player teleport request
     usage: /<command>
+
+  setwarp:
+    description: Add warp to the player's current location
+    usage: /<command> <warp>
+  warp:
+    description: Teleport to a warp
+    usage: /<command> <warp>

@@ -116,6 +116,17 @@ public class DatabaseHelper {
         }
     }
 
+    public static int getWarpCoolDown(Player player){
+        long current = System.currentTimeMillis();
+        long previous = queryLastWarpTeleport(player.getUniqueId());
+        if (previous == 0) {
+            return 0;
+        } else {
+            long elapsed = current - previous;
+            return (SimpleTeleport.plugin.getConfig().getInt("warp.cd") - (int) (elapsed / 1000));
+        }
+    }
+
     public static void insertHome(UUID uuid, String world, double x, double y, double z, float yaw, float pitch) {
         String sql = "INSERT OR REPLACE INTO Homes VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -130,6 +141,23 @@ public class DatabaseHelper {
         } catch (SQLException e) {
             e.printStackTrace();
             SimpleTeleport.plugin.getLogger().warning("[SQLite] inserting into Homes: " + e.getMessage());
+        }
+    }
+
+    public static void insertWarp(String name, String world, double x, double y, double z, float yaw, float pitch) {
+        String sql = "INSERT OR REPLACE INTO Warps VALUES(?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, name);
+            statement.setString(2, world);
+            statement.setDouble(3, x);
+            statement.setDouble(4, y);
+            statement.setDouble(5, z);
+            statement.setFloat(6, yaw);
+            statement.setFloat(7, pitch);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] inserting into Warps: " + e.getMessage());
         }
     }
 
@@ -239,6 +267,30 @@ public class DatabaseHelper {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
         }
         throw new DatabaseHelper.EmptyQueryException("No home was found with this UUID.");
+    }
+
+    public static Location queryWarp(String name) {
+        String sql = "SELECT world, x, y, z, yaw, pitch FROM Warps WHERE name = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Location(
+                        SimpleTeleport.plugin.getServer().getWorld(resultSet.getString("world")),
+                        resultSet.getDouble("x"),
+                        resultSet.getDouble("y"),
+                        resultSet.getDouble("z"),
+                        resultSet.getFloat("yaw"),
+                        resultSet.getFloat("pitch")
+                );
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
+        }
+        return null;
     }
 
     public static long queryLastHomeTeleport(UUID uuid) {
