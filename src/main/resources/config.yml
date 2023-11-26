@@ -3,11 +3,11 @@ prefix: '&2[SimpleTP]'
 
 home:
   cd: 30 # number of seconds before a player can use /home again
-  msg:
-    tp: '&5Opening a portal to home...'
-    cd: '&cYour home portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
+  bossbar: '&5Destination: &lhome&r'
+  msg: '&5Opening a portal to home...'
+  error:
+    invalid-syntax: '&cInvalid syntax, use &f/home &cto go home'
     no-home: '&cYou do not have a home yet, use &f/sethome &cto set one'
-  bossbar: '&5Destination: home'
 
 
 sethome:
