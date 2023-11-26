@@ -13,9 +13,14 @@ import java.util.Objects;
 public class SetHomeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender == null || command == null || label == null) { return true; }
         if (!(sender instanceof Player)) { return true; }
+
         Player player = (Player)sender;
+        if (args.length != 1) {
+            player.sendMessage(MessageHelper.stringFromConfig("sethome.error.invalid-syntax"));
+            return true;
+        }
+        
         Location location = player.getLocation();
 
         DatabaseHelper.insertHome(
