@@ -9,7 +9,6 @@ home:
     invalid-syntax: '&cInvalid syntax, use &f/home &cto go home'
     no-home: '&cYou do not have a home yet, use &f/sethome &cto set one'
 
-
 sethome:
   msg: '&5Setting your home portal to &fx: <x>, y: <y>, z: <z>'
   error:
@@ -25,9 +24,20 @@ warp:
 
 setwarp:
   msg: '&5Setting &l<warp>&r&5 portal to &fx: <x>, y: <y>, z: <z>'
-
   error:
     invalid-syntax: '&cInvalid syntax, use &f/setwarp &cto set a warp'
+
+tpr:
+  msg:
+    sender: '&5Sending a portal request to &l<player>&r'
+    receiver: '&5Incoming portal request from &l<player>&r&5, use &f/tpa &5to &2accept &5or &f/tpd &5to &cdeny'
+  error:
+    invalid-syntax: '&cInvalid input, use &f/tpr <player>&c to request a portal to a player'
+    no-target: '&cThis player is offline or does not exist'
+    cd: '&cYour player portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
+    self-tp: '&cYou cannot send a portal to yourself'
+    pending-outgoing: '&cYou already have an outgoing request'
+    busy: '&c&l<player>&r&c is busy, try again later'
 
 
 player:
@@ -60,16 +70,3 @@ player:
     expire:
       sender: '&cAn outgoing portal request has expired'
       receiver: '&cAn incoming portal request has expired'
-
-    # error messages
-    cd: '&cYour player portal is on cooldown, &f<cooldown>s &cleft before you can use it again'
-
-    invalid-input: '&cInvalid input, use &f/tpr &l<player>&r&c to request a portal to a player'
-
-    no-target: '&cThis player is offline or does not exist'
-
-    self-tp: '&cYou cannot send a portal to yourself'
-
-    pending-outgoing: '&cYou already have an outgoing request'
-
-    busy: '&c&l<player>&r&c is busy, try again later'
