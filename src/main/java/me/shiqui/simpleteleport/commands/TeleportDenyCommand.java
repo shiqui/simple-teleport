@@ -2,7 +2,6 @@ package me.shiqui.simpleteleport.commands;
 
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import me.shiqui.simpleteleport.utils.MessageHelper;
-import me.shiqui.simpleteleport.utils.TeleportHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

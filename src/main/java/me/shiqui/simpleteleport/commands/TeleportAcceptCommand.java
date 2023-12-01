@@ -4,7 +4,6 @@ import me.shiqui.simpleteleport.SimpleTeleport;
 import me.shiqui.simpleteleport.tasks.TeleportTask;
 import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import me.shiqui.simpleteleport.utils.MessageHelper;
-import me.shiqui.simpleteleport.utils.TeleportHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

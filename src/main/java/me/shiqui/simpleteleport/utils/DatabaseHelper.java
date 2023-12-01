@@ -399,7 +399,6 @@ public class DatabaseHelper {
         return null;
     }
 
-
     public static void removeTeleportRequest(UUID uuid) {
         String sql = "DELETE FROM TeleportRequests WHERE uuid = ?";
         try {
@@ -411,45 +410,6 @@ public class DatabaseHelper {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
         }
     }
-
-    public static void removeExpiredTeleportRequest() {
-        long current = System.currentTimeMillis();
-        long threshold = current - (SimpleTeleport.plugin.getConfig().getInt("player.expire-time") * 1000L);
-
-        String sqlSelect = "SELECT * FROM TeleportRequests WHERE createdAt < ?";
-        String sqlDelete = "DELETE FROM TeleportRequests WHERE uuid = ?";
-        try {
-            PreparedStatement statementSelect = conn.prepareStatement(sqlSelect);
-            PreparedStatement statementDelete = conn.prepareStatement(sqlDelete);
-
-            statementSelect.setLong(1, threshold);
-
-            ResultSet resultSet = statementSelect.executeQuery();
-
-            while (resultSet.next()) {
-                String playerId = resultSet.getString("uuid");
-                Player player = Bukkit.getPlayer(UUID.fromString(playerId));
-                String targetId = resultSet.getString("target");
-                Player target = Bukkit.getPlayer(UUID.fromString(targetId));
-
-                if (player != null){
-                    player.sendMessage(MessageHelper.stringFromConfig("player.msg.expire.sender"));
-                }
-
-                if (target != null){
-                    target.sendMessage(MessageHelper.stringFromConfig("player.msg.expire.receiver"));
-                }
-
-                statementDelete.setString(1, playerId);
-                statementDelete.executeUpdate();
-            }
-            statementSelect.close();
-            statementDelete.close();
-        } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
-        }
-    }
-
 
 }
 
