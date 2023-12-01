@@ -112,7 +112,7 @@ public class DatabaseHelper {
             return 0;
         } else {
             long elapsed = current - previous;
-            return (SimpleTeleport.plugin.getConfig().getInt("player.cd.sender") - (int) (elapsed / 1000));
+            return (SimpleTeleport.plugin.getConfig().getInt("tpr.cd") - (int) (elapsed / 1000));
         }
     }
 

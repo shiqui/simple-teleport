@@ -22,7 +22,7 @@ public final class SimpleTeleport extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand());
 
         getCommand("tpr").setExecutor(new TeleportRequestCommand());
-        getCommand("tpa").setExecutor(new PlayerTeleportAcceptCommand());
+        getCommand("tpa").setExecutor(new TeleportAcceptCommand());
         getCommand("tpd").setExecutor(new PlayerTeleportDenyCommand());
 
         getCommand("setwarp").setExecutor(new SetWarpCommand());
