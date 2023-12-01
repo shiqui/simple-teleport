@@ -8,34 +8,32 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PlayerTeleportDenyCommand implements CommandExecutor {
+public class TeleportDenyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            return true;
-        }
-
+        if (!(sender instanceof Player)) { return true; }
         Player target = (Player)sender;
         Player origin = DatabaseHelper.queryPendingInRequest(target.getUniqueId());
 
         if (origin == null) {
-            target.sendMessage(MessageHelper.stringFromConfig("player.msg.deny.no-pending"));
+            target.sendMessage(MessageHelper.stringFromConfig("tpd.error.no-pending"));
             return true;
         }
 
         DatabaseHelper.removeTeleportRequest(origin.getUniqueId());
 
+        target.sendMessage(
+                MessageHelper
+                        .stringFromConfig("tpd.msg.sender")
+                        .replace("<player>", origin.getName())
+        );
+
         origin.sendMessage(
             MessageHelper
-                .stringFromConfig("player.msg.deny.sender")
+                .stringFromConfig("tpd.msg.receiver")
                 .replace("<player>", target.getName())
         );
 
-        target.sendMessage(
-            MessageHelper
-                .stringFromConfig("player.msg.deny.receiver")
-                .replace("<player>", origin.getName())
-        );
         return true;
     }
 }

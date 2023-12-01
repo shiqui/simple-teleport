@@ -21,7 +21,7 @@ public class TeleportAcceptCommand implements CommandExecutor {
             target.sendMessage(MessageHelper.stringFromConfig("tpa.error.no-pending"));
             return true;
         }
-        
+
         DatabaseHelper.insertLastPlayerTeleport(origin.getUniqueId(), System.currentTimeMillis());
         DatabaseHelper.removeTeleportRequest(origin.getUniqueId());
 

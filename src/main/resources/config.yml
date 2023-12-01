@@ -48,14 +48,16 @@ tpa:
   error:
     no-pending: '&cYou do not have any incoming request'
 
+tpd:
+  msg:
+    sender: '&cDenied a portal request from &l<player>&r'
+    receiver: '&c&l<player>&r&c denied your portal request'
+  error:
+    no-pending: '&cYou do not have any incoming request'
 
 player:
   expire-time: 10 # number of seconds before pending teleport request is expired
   msg:
-    deny:
-      sender: '&c&l<player>&r&c denied your portal request'
-      receiver: '&cDenied a portal request from &l<player>&r'
-      no-pending: '&cYou do not have any incoming request'
     expire:
       sender: '&cAn outgoing portal request has expired'
       receiver: '&cAn incoming portal request has expired'
