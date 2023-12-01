@@ -29,6 +29,7 @@ setwarp:
 
 tpr:
   cd: 60 # number of seconds before a player can use /tpr again
+  expire-time: 10 # number of seconds before a pending request expires
   bossbar: '&5Destination: &l<player>&r'
   msg:
     sender: '&5Sending a portal request to &l<player>&r'
@@ -40,6 +41,7 @@ tpr:
     self-tp: '&cYou cannot send a portal to yourself'
     pending-outgoing: '&cYou already have an outgoing request'
     busy: '&c&l<player>&r&c is busy, try again later'
+    expire: '&cAn outgoing portal request has expired'
 
 tpa:
   msg:
@@ -54,10 +56,3 @@ tpd:
     receiver: '&c&l<player>&r&c denied your portal request'
   error:
     no-pending: '&cYou do not have any incoming request'
-
-player:
-  expire-time: 10 # number of seconds before pending teleport request is expired
-  msg:
-    expire:
-      sender: '&cAn outgoing portal request has expired'
-      receiver: '&cAn incoming portal request has expired'

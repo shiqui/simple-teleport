@@ -5,6 +5,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class DatabaseHelper {
@@ -378,42 +379,25 @@ public class DatabaseHelper {
         return null;
     }
 
-    /*
-    public static boolean hasPendingOutRequest(UUID uuid) {
-        String sql = "SELECT * FROM TeleportRequests WHERE uuid = ?";
+    public static ArrayList<UUID> queryExpiredRequest() {
+        long current = System.currentTimeMillis();
+        long threshold = current - (SimpleTeleport.plugin.getConfig().getInt("tpr.expire-time") * 1000L);
+        String sql = "SELECT * FROM TeleportRequests WHERE createdAt < ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
+            statement.setLong(1, threshold);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
+            ArrayList<UUID> result = new ArrayList<UUID>();
+            while (resultSet.next()) {
+                result.add(UUID.fromString(resultSet.getString("uuid")));
             }
-            resultSet.close();
             statement.close();
+            return result;
         } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
         }
-        return false;
+        return null;
     }
-
-    public static boolean hasPendingInRequest(UUID uuid) {
-        String sql = "SELECT * FROM TeleportRequests WHERE target = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
-        }
-        return false;
-    }
-
-     */
 
 
     public static void removeTeleportRequest(UUID uuid) {
