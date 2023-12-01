@@ -11,9 +11,14 @@ public class TeleportDenyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) { return true; }
-        Player target = (Player)sender;
-        Player origin = DatabaseHelper.queryPendingInRequest(target.getUniqueId());
 
+        Player target = (Player)sender;
+        if (args.length != 0) {
+            target.sendMessage(MessageHelper.stringFromConfig("tpd.error.invalid-syntax"));
+            return true;
+        }
+
+        Player origin = DatabaseHelper.queryPendingInRequest(target.getUniqueId());
         if (origin == null) {
             target.sendMessage(MessageHelper.stringFromConfig("tpd.error.no-pending"));
             return true;

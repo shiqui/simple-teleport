@@ -12,8 +12,8 @@ public class TeleportRequestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) { return true; }
-        Player player = (Player)sender;
 
+        Player player = (Player)sender;
         if (args.length != 1) {
             player.sendMessage(MessageHelper.stringFromConfig("tpr.error.invalid-syntax"));
             return true;
