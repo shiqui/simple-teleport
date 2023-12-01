@@ -411,6 +411,18 @@ public class DatabaseHelper {
         }
     }
 
+    public static void removeWarp(String name) {
+        String sql = "DELETE FROM Warps WHERE name = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from Warps: " + e.getMessage());
+        }
+    }
+
 }
 
 

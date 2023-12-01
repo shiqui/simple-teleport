@@ -27,7 +27,13 @@ warp:
 setwarp:
   msg: '&5Setting &l<warp>&r&5 portal to &fx: <x>, y: <y>, z: <z>'
   error:
-    invalid-syntax: '&cInvalid syntax, use &f/setwarp &cto set a warp'
+    invalid-syntax: '&cInvalid syntax, use &f/setwarp <warp>&c to set a warp'
+
+dewarp:
+  msg: '&5Deleted &l<warp>&r&5 portal'
+  error:
+    invalid-syntax: '&cInvalid syntax, use &f/dewarp <warp>&c to set a warp'
+    no-warp: '&cThis warp does not exist'
 
 tpr:
   cd: 60 # number of seconds before a player can use /tpr again
