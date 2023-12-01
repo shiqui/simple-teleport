@@ -5,6 +5,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class DatabaseHelper {
@@ -112,7 +113,7 @@ public class DatabaseHelper {
             return 0;
         } else {
             long elapsed = current - previous;
-            return (SimpleTeleport.plugin.getConfig().getInt("player.cd.sender") - (int) (elapsed / 1000));
+            return (SimpleTeleport.plugin.getConfig().getInt("tpr.cd") - (int) (elapsed / 1000));
         }
     }
 
@@ -245,7 +246,7 @@ public class DatabaseHelper {
 
     }
 
-    public static Location queryHome(UUID uuid) throws DatabaseHelper.EmptyQueryException{
+    public static Location queryHome(UUID uuid){
         String sql = "SELECT world, x, y, z, yaw, pitch FROM Homes WHERE uuid = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -266,7 +267,7 @@ public class DatabaseHelper {
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
         }
-        throw new DatabaseHelper.EmptyQueryException("No home was found with this UUID.");
+        return null;
     }
 
     public static Location queryWarp(String name) {
@@ -378,43 +379,25 @@ public class DatabaseHelper {
         return null;
     }
 
-    /*
-    public static boolean hasPendingOutRequest(UUID uuid) {
-        String sql = "SELECT * FROM TeleportRequests WHERE uuid = ?";
+    public static ArrayList<UUID> queryExpiredRequest() {
+        long current = System.currentTimeMillis();
+        long threshold = current - (SimpleTeleport.plugin.getConfig().getInt("tpr.expire-time") * 1000L);
+        String sql = "SELECT * FROM TeleportRequests WHERE createdAt < ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
+            statement.setLong(1, threshold);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
+            ArrayList<UUID> result = new ArrayList<UUID>();
+            while (resultSet.next()) {
+                result.add(UUID.fromString(resultSet.getString("uuid")));
             }
-            resultSet.close();
             statement.close();
+            return result;
         } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
         }
-        return false;
+        return null;
     }
-
-    public static boolean hasPendingInRequest(UUID uuid) {
-        String sql = "SELECT * FROM TeleportRequests WHERE target = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
-        }
-        return false;
-    }
-
-     */
-
 
     public static void removeTeleportRequest(UUID uuid) {
         String sql = "DELETE FROM TeleportRequests WHERE uuid = ?";
@@ -428,50 +411,17 @@ public class DatabaseHelper {
         }
     }
 
-    public static void removeExpiredTeleportRequest() {
-        long current = System.currentTimeMillis();
-        long threshold = current - (SimpleTeleport.plugin.getConfig().getInt("player.expire-time") * 1000L);
-
-        String sqlSelect = "SELECT * FROM TeleportRequests WHERE createdAt < ?";
-        String sqlDelete = "DELETE FROM TeleportRequests WHERE uuid = ?";
+    public static void removeWarp(String name) {
+        String sql = "DELETE FROM Warps WHERE name = ?";
         try {
-            PreparedStatement statementSelect = conn.prepareStatement(sqlSelect);
-            PreparedStatement statementDelete = conn.prepareStatement(sqlDelete);
-
-            statementSelect.setLong(1, threshold);
-
-            ResultSet resultSet = statementSelect.executeQuery();
-
-            while (resultSet.next()) {
-                String playerId = resultSet.getString("uuid");
-                Player player = Bukkit.getPlayer(UUID.fromString(playerId));
-                String targetId = resultSet.getString("target");
-                Player target = Bukkit.getPlayer(UUID.fromString(targetId));
-
-                if (player != null){
-                    player.sendMessage(MessageHelper.stringFromConfig("player.msg.expire.sender"));
-                }
-
-                if (target != null){
-                    target.sendMessage(MessageHelper.stringFromConfig("player.msg.expire.receiver"));
-                }
-
-                statementDelete.setString(1, playerId);
-                statementDelete.executeUpdate();
-            }
-            statementSelect.close();
-            statementDelete.close();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from Warps: " + e.getMessage());
         }
     }
-
-    public static class EmptyQueryException extends Exception {
-        public EmptyQueryException(String message) {
-            super(message);
-        }
-    }
-
 
 }
 

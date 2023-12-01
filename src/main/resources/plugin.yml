@@ -15,11 +15,9 @@ commands:
   tpr:
     description: Teleport to a player
     usage: /<command> <player>
-
   tpa:
     description: Accept an incoming player teleport request
     usage: /<command>
-
   tpd:
     description: Deny an incoming player teleport request
     usage: /<command>
@@ -29,4 +27,7 @@ commands:
     usage: /<command> <warp>
   warp:
     description: Teleport to a warp
+    usage: /<command> <warp>
+  dewarp:
+    description: Delete a warp
     usage: /<command> <warp>
