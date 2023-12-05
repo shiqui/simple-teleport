@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DatabaseHelper {
@@ -288,6 +289,24 @@ public class DatabaseHelper {
             }
             resultSet.close();
             statement.close();
+        } catch (SQLException e) {
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static List<String> queryAllWarpNames() {
+        String sql = "SELECT name FROM Warps";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            List<String> warpNames = new ArrayList<String>();
+            while (resultSet.next()) {
+                warpNames.add(resultSet.getString("name"));
+            }
+            resultSet.close();
+            statement.close();
+            return warpNames;
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
         }

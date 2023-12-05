@@ -8,11 +8,15 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.shiqui.simpleteleport.utils.DatabaseHelper.queryWarp;
 
-public class WarpCommand implements CommandExecutor {
+public class WarpCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)){ return true; }
@@ -58,5 +62,11 @@ public class WarpCommand implements CommandExecutor {
         ).runTaskTimer(SimpleTeleport.plugin, 0, 1);
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) { return DatabaseHelper.queryAllWarpNames(); }
+        return new ArrayList<String>();
     }
 }
