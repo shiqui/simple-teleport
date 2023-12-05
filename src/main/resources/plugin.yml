@@ -5,29 +5,61 @@ api-version: '1.20'
 prefix: SimpleTP
 authors: [ shiqui ]
 commands:
-  sethome:
-    description: Set home to the player's current location
-    usage: /<command>
   home:
     description: Teleport to home
     usage: /<command>
-
+    permission: SimpleTeleport.command.home
+    permission-message: "You do not have the permission"
+  sethome:
+    description: Set home to the player's current location
+    usage: /<command>
+    permission: SimpleTeleport.command.sethome
+    permission-message: "You do not have the permission"
   tpr:
     description: Teleport to a player
     usage: /<command> <player>
+    permission: SimpleTeleport.command.tpr
+    permission-message: "You do not have the permission"
   tpa:
     description: Accept an incoming player teleport request
     usage: /<command>
+    permission: SimpleTeleport.command.tpa
+    permission-message: "You do not have the permission"
   tpd:
     description: Deny an incoming player teleport request
     usage: /<command>
-
-  setwarp:
-    description: Add warp to the player's current location
-    usage: /<command> <warp>
+    permission: SimpleTeleport.command.tpd
+    permission-message: "You do not have the permission"
   warp:
     description: Teleport to a warp
     usage: /<command> <warp>
+    permission: SimpleTeleport.command.warp
+    permission-message: "You do not have the permission"
+  setwarp:
+    description: Add warp to the player's current location
+    usage: /<command> <warp>
+    permission: SimpleTeleport.command.setwarp
+    permission-message: "You do not have the permission"
   dewarp:
     description: Delete a warp
     usage: /<command> <warp>
+    permission: SimpleTeleport.command.dewarp
+    permission-message: "You do not have the permission"
+
+permissions:
+  SimpleTeleport.command.home:
+    default: true
+  SimpleTeleport.command.sethome:
+    default: true
+  SimpleTeleport.command.tpr:
+    default: true
+  SimpleTeleport.command.tpa:
+    default: true
+  SimpleTeleport.command.tpd:
+    default: true
+  SimpleTeleport.command.warp:
+    default: true
+  SimpleTeleport.command.setwarp:
+    default: op
+  SimpleTeleport.command.dewarp:
+    default: op
