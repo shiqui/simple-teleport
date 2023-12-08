@@ -22,4 +22,4 @@ Players can send a teleport request to another player. The recipient can either 
 Make sure you have a spigot server ready. Download the jar file from release and place it in the `plugins/` folder. Alternatively, you can also clone the repo and build the jar from source.
 
 ## Configuration
-After having started the server at with once with SimpleTP installed, the directory `SimpleTeleport/` containing `config.yml` and `SimpleTP.db` will appear under `plugins/`. All locations, requests and cooldowns are stored in `SimpleTP.db`, an SQLite database. Cooldowns and messages can be configure inside `config.yml`.
+After having started the server at with once with SimpleTP installed, the directory `SimpleTeleport/` containing `config.yml` and `SimpleTP.db` will appear under `plugins/`. All locations, requests and cooldowns are stored in `SimpleTP.db`, an SQLite database. Cooldowns and messages can be configured inside `config.yml`.
