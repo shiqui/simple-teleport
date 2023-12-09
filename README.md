@@ -5,8 +5,8 @@ A simple teleport manager plugin for Minecraft, minimalistic and functional.
 SimpleTP manages three kinds of teleports: **home**, **warp** and **player**, each having their own cooldown.
 ### Home
 Players can set a single location as their personal home. Homes are private and exclusively accessible to the owner.
-- `/sethome` set the current location as home
-- `/home` teleport to home
+- `/sethome`: set the current location as home
+- `/home`: teleport to home
 ### Warp
 Admins can set locations as warps, assigning each a unique name. Warps are public and can be directly accessed by all players using their warp names.
 - `/setwarp <warp>`: **Admin Only** set the current location as a warp with name `<warp>`
