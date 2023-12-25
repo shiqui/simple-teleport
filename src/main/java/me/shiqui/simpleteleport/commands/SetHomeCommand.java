@@ -4,7 +4,6 @@ import me.shiqui.simpleteleport.utils.DatabaseHelper;
 import me.shiqui.simpleteleport.utils.MessageHelper;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SetHomeCommand implements CommandExecutor, TabExecutor {
+public class SetHomeCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) { return true; }

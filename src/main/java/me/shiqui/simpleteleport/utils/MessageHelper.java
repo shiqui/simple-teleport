@@ -3,7 +3,6 @@ package me.shiqui.simpleteleport.utils;
 import me.shiqui.simpleteleport.SimpleTeleport;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
