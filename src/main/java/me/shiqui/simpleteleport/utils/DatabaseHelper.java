@@ -249,22 +249,20 @@ public class DatabaseHelper {
 
     public static Location queryHome(UUID uuid){
         String sql = "SELECT world, x, y, z, yaw, pitch FROM Homes WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new Location(
-                        SimpleTeleport.plugin.getServer().getWorld(resultSet.getString("world")),
-                        resultSet.getDouble("x"),
-                        resultSet.getDouble("y"),
-                        resultSet.getDouble("z"),
-                        resultSet.getFloat("yaw"),
-                        resultSet.getFloat("pitch")
-                );
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Location(
+                            SimpleTeleport.plugin.getServer().getWorld(resultSet.getString("world")),
+                            resultSet.getDouble("x"),
+                            resultSet.getDouble("y"),
+                            resultSet.getDouble("z"),
+                            resultSet.getFloat("yaw"),
+                            resultSet.getFloat("pitch")
+                    );
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
         }
@@ -273,57 +271,52 @@ public class DatabaseHelper {
 
     public static Location queryWarp(String name) {
         String sql = "SELECT world, x, y, z, yaw, pitch FROM Warps WHERE name = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new Location(
-                        SimpleTeleport.plugin.getServer().getWorld(resultSet.getString("world")),
-                        resultSet.getDouble("x"),
-                        resultSet.getDouble("y"),
-                        resultSet.getDouble("z"),
-                        resultSet.getFloat("yaw"),
-                        resultSet.getFloat("pitch")
-                );
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Location(
+                            SimpleTeleport.plugin.getServer().getWorld(resultSet.getString("world")),
+                            resultSet.getDouble("x"),
+                            resultSet.getDouble("y"),
+                            resultSet.getDouble("z"),
+                            resultSet.getFloat("yaw"),
+                            resultSet.getFloat("pitch")
+                    );
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Warps: " + e.getMessage());
         }
         return null;
     }
 
     public static List<String> queryAllWarpNames() {
         String sql = "SELECT name FROM Warps";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            List<String> warpNames = new ArrayList<String>();
+        try (
+                PreparedStatement statement = conn.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()
+            ) {
+            List<String> warpNames = new ArrayList<>();
             while (resultSet.next()) {
                 warpNames.add(resultSet.getString("name"));
             }
-            resultSet.close();
-            statement.close();
             return warpNames;
         } catch (SQLException e) {
-            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Homes: " + e.getMessage());
+            SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from Warps: " + e.getMessage());
         }
         return null;
     }
 
     public static long queryLastHomeTeleport(UUID uuid) {
         String sql = "SELECT home FROM LastTeleports WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getLong("home");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong("home");
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying home from LastTeleports: " + e.getMessage());
         }
@@ -332,15 +325,13 @@ public class DatabaseHelper {
 
     public static long queryLastWarpTeleport(UUID uuid) {
         String sql = "SELECT warp FROM LastTeleports WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getLong("warp");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong("warp");
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying warp from LastTeleports: " + e.getMessage());
         }
@@ -349,15 +340,13 @@ public class DatabaseHelper {
 
     public static long queryLastPlayerTeleport(UUID uuid) {
         String sql = "SELECT player FROM LastTeleports WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getLong("player");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong("player");
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying player from LastTeleports: " + e.getMessage());
         }
@@ -366,15 +355,13 @@ public class DatabaseHelper {
 
     public static Player queryPendingInRequest(UUID uuid) {
         String sql = "SELECT * FROM TeleportRequests WHERE target = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Bukkit.getPlayer(UUID.fromString(resultSet.getString("uuid")));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Bukkit.getPlayer(UUID.fromString(resultSet.getString("uuid")));
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
         }
@@ -383,15 +370,13 @@ public class DatabaseHelper {
 
     public static Player queryPendingOutRequest(UUID uuid) {
         String sql = "SELECT * FROM TeleportRequests WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Bukkit.getPlayer(UUID.fromString(resultSet.getString("target")));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Bukkit.getPlayer(UUID.fromString(resultSet.getString("target")));
+                }
             }
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] querying from TeleportRequests: " + e.getMessage());
         }
@@ -402,29 +387,25 @@ public class DatabaseHelper {
         long current = System.currentTimeMillis();
         long threshold = current - (SimpleTeleport.plugin.getConfig().getInt("tpr.expire-time") * 1000L);
         String sql = "SELECT * FROM TeleportRequests WHERE createdAt < ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setLong(1, threshold);
-            ResultSet resultSet = statement.executeQuery();
-            ArrayList<UUID> result = new ArrayList<UUID>();
-            while (resultSet.next()) {
-                result.add(UUID.fromString(resultSet.getString("uuid")));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                ArrayList<UUID> result = new ArrayList<>();
+                while (resultSet.next()) {
+                    result.add(UUID.fromString(resultSet.getString("uuid")));
+                }
+                return result;
             }
-            statement.close();
-            return result;
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
         }
         return null;
     }
-
     public static void removeTeleportRequest(UUID uuid) {
         String sql = "DELETE FROM TeleportRequests WHERE uuid = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from TeleportRequests: " + e.getMessage());
         }
@@ -432,11 +413,9 @@ public class DatabaseHelper {
 
     public static void removeWarp(String name) {
         String sql = "DELETE FROM Warps WHERE name = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
             SimpleTeleport.plugin.getLogger().warning("[SQLite] deleting from Warps: " + e.getMessage());
         }
