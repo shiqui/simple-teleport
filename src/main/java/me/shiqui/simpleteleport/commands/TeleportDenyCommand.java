@@ -26,7 +26,8 @@ public class TeleportDenyCommand implements TabExecutor {
             target.sendMessage(MessageHelper.stringFromConfig("tpd.error.no-pending"));
             return true;
         }
-
+        
+        DatabaseHelper.insertLastPlayerTeleport(origin.getUniqueId(), System.currentTimeMillis());
         DatabaseHelper.removeTeleportRequest(origin.getUniqueId());
 
         target.sendMessage(
